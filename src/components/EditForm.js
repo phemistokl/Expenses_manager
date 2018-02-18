@@ -8,28 +8,40 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
-import { addExpense } from '../actions';
+import { updateExpense } from '../actions';
 
-@connect(undefined, { addExpense })
-export default class Add extends Component {
+@connect(undefined, { updateExpense })
+export default class EditForm extends Component {
   constructor(props) {
     super(props);
 
-    this.handleAdd = this.handleAdd.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
     this.handleChangeTitle = this.handleChangeTitle.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeAmount = this.handleChangeAmount.bind(this);
     this.handleChangeDate = this.handleChangeDate.bind(this);
 
     this.state = {
-      title: '',
+      title: props.title,
       description: '',
       amount: '',
       date: ''
     };
   }
 
-  handleAdd() {
+//   componentWillMount() {
+//     this.setState({ title: this.props.title });
+//   }
+
+  componentWillReceiveProps(nextProps) {
+      //console.log(nextProps.current)
+      if (nextProps.id !== this.props.id) {
+        this.setState({ title: nextProps.title, description: nextProps.description, amount: nextProps.amount, date: nextProps.date });
+        console.log("hey");
+      }
+  }
+
+  handleEdit() {
     const expense = {
         title: this.state.title,
         description: this.state.description,
@@ -37,7 +49,7 @@ export default class Add extends Component {
         date: this.state.date,
     };
 
-    this.props.addExpense(expense);
+    this.props.updateExpense(this.props.id, expense);
   }
 
   handleChangeTitle(e) {
@@ -61,11 +73,13 @@ export default class Add extends Component {
   }
 
   render() {
+      console.log(this.props.title)
+      //console.log(this.state.title)
     return (
       <div className="Add">
         <Row className="show-grid">
           <Col xs={12} sm={12} md={12} lg={12}>
-            <h1>Add expense</h1>
+            <div>{this.state.title}</div>
           </Col>
         </Row>
         <form>
@@ -104,9 +118,24 @@ export default class Add extends Component {
               onChange={this.handleChangeDate}
             />
           </FormGroup>
-          <Link to="/"><Button onClick={this.handleAdd} bsStyle="success">Add</Button></Link>
+          <Link to="/"><Button onClick={this.handleEdit} bsStyle="success">Edit</Button></Link>
         </form>
       </div>
     );
   }
 }
+
+
+
+// import React from 'react';
+
+// const EditForm = props => {
+//     return (
+//             <div>
+//                 <h1>{props.title}</h1>
+//                 <p>{props.description}</p>
+//             </div>
+//     );
+// }
+
+// export default EditForm;

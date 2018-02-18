@@ -16,7 +16,7 @@ export const updateExpense = (id, expense) => {
         title: expense.title,
         description: expense.description,
         amount: expense.amount,
-        date: expense.date
+        date: expense.date ? new Date(expense.date) : new Date()
     };
 };
 

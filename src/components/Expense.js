@@ -21,7 +21,7 @@ export default class Expense extends Component {
 
   render() {
     const { id, title, description, amount, date } = this.props;
-
+    console.log("gaftus")
     return (
       <tr>
         <td>{title}</td>

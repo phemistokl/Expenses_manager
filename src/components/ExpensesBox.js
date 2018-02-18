@@ -14,12 +14,13 @@ export default class ExpensesBox extends Component {
   constructor(props) {
     super(props);
 
-    this.state ={
-      expenses: []
-    };
+    // this.state ={
+    //   expenses: []
+    // };
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="ExpensesBox">
         <Row className="show-grid">
@@ -42,14 +43,7 @@ export default class ExpensesBox extends Component {
           <tbody>
             {
               this.props.expenses.map(expense => 
-                <Expense 
-                  key={expense.id}
-                  id={expense.id}
-                  title={expense.title}
-                  description={expense.description}
-                  amount={expense.amount}
-                  date={expense.date}
-                />
+                <Expense key={expense.id} {...expense} />
               )
             }
           </tbody>
@@ -61,6 +55,6 @@ export default class ExpensesBox extends Component {
 
 function mapStateToProps(state) {
   return {
-    expenses: state.expenses
+    expenses: state.expenses.expenses
   };
 }
